@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/motion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/scene_twist"
-    app:motionDebug="SHOW_ALL"
-    app:showPaths="true">
+    android:clipChildren="false"
+    app:layoutDescription="@xml/scene_recipe_item_view">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/recipe_data_card_view"
@@ -18,6 +16,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
+        android:clipChildren="false"
         android:elevation="16dp"
         app:cardCornerRadius="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,10 +24,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motion_layout_inner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_color_recipe_item">
+            android:background="@drawable/background_color_recipe_item"
+            android:clipChildren="false"
+            app:layoutDescription="@xml/scene_recipe_item_view">
 
             <TextView
                 android:id="@+id/recipe_name"
@@ -36,7 +38,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/shevana"
                 android:padding="32dp"
+                android:text="Chicken Curry with parmesann cheese and parika"
                 android:textAlignment="center"
+                android:textColor="@color/text_color"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:padding="16dp"
+                android:text="135 KCal"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="28sp"
@@ -65,21 +70,24 @@
                 android:layout_marginTop="64dp"
                 android:fontFamily="sans-serif"
                 android:padding="16dp"
+                android:text="4 servings"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_name"
+                app:layout_constraintVertical_chainStyle="spread"
                 tools:text="4 servings" />
 
             <TextView
                 android:id="@+id/recipe_diet_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
                 android:padding="16dp"
+                android:text="Low-Carbs"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="18sp"
@@ -95,6 +103,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
                 android:padding="16dp"
+                android:text="30 minutes"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="18sp"
@@ -107,57 +116,42 @@
                 android:id="@+id/recipe_cuisine_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="sans-serif"
                 android:padding="16dp"
+                android:text="Medditeraien"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/recipe_calorie_count"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_cook_time"
                 tools:text="Medditeraien" />
 
-            <TextView
-                android:id="@+id/recipe_dish_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif"
-                android:padding="16dp"
-                android:textAlignment="center"
-                android:textColor="@color/text_color"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recipe_cuisine_type"
-                tools:text="Main course" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </androidx.cardview.widget.CardView>
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:id="@+id/recipe_image_card_view"-->
-    <!--        android:layout_width="208dp"-->
-    <!--        android:layout_height="208dp"-->
-    <!--        android:layout_marginEnd="8dp"-->
-    <!--        android:elevation="64dp"-->
-    <!--        app:cardCornerRadius="128dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <ImageView
-        android:id="@+id/recipe_image"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/recipe_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/recipe_image"
-        android:src="@drawable/placeholder"
+        android:elevation="64dp"
+        android:padding="8dp"
+        app:cardCornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--    </androidx.cardview.widget.CardView>-->
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/recipe_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/recipe_image"
+            android:src="@drawable/placeholder" />
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
 

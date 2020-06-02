@@ -1,13 +1,17 @@
 package com.techdining.www.recipestats.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.techdining.www.recipestats.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
+import com.techdining.www.recipestats.adapters.RecipeListAdapter
+import com.techdining.www.recipestats.databinding.RecipeHomeFragmentBinding
+import com.techdining.www.recipestats.utils.ItemTransformer
 import com.techdining.www.recipestats.viewModel.RecipeHomeViewModel
+import timber.log.Timber
 
 class RecipeHomeFragment : Fragment() {
 
@@ -16,16 +20,34 @@ class RecipeHomeFragment : Fragment() {
     }
 
     private lateinit var viewModel: RecipeHomeViewModel
+    private lateinit var transformer: ItemTransformer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.recipe_home_fragment, container, false)
+        val binding = RecipeHomeFragmentBinding.inflate(inflater, container, false)
+        binding.recipeList.apply {
+            adapter = RecipeListAdapter(10).apply {
+                registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageScrolled(
+                        position: Int, positionOffset: Float, positionOffsetPixels: Int
+                    ) {
+                        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                        transformer = ItemTransformer(positionOffset, position)
+                        setPageTransformer(transformer)
+                    }
+                })
+            }
+        }
+        //TabLayoutMediator(tab_layout, this) { _, _ -> }.attach()
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Timber.i("ViewModelProvider is called")
         viewModel = ViewModelProvider(this).get(RecipeHomeViewModel::class.java)
         // TODO: Use the ViewModel
     }
