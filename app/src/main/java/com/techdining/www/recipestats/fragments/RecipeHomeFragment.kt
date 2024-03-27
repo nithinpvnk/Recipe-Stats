@@ -45,11 +45,10 @@ class RecipeHomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Timber.i("ViewModelProvider is called")
         viewModel = ViewModelProvider(this).get(RecipeHomeViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
 }

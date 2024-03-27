@@ -24,10 +24,8 @@ class RecipeDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.recipe_details_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(RecipeDetailsViewModel::class.java)
-        // TODO: Use the ViewModel
     }
-
 }

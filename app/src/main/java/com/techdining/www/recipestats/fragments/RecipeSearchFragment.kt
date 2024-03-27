@@ -24,8 +24,8 @@ class RecipeSearchFragment : Fragment() {
         return inflater.inflate(R.layout.recipe_search_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(RecipeSearchViewModel::class.java)
         // TODO: Use the ViewModel
     }
